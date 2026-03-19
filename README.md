@@ -18,7 +18,7 @@ Xử lý đa luồng
 WSAStartup(MAKEWORD(2, 2), &wsaData)
 ```
 
-Khởi tạo thư viện Winsock 2.2, bắt buộc phải gọi trước mọi socket API. `wsaData` nhận thông tin phiên bản được cấp.
+goij `WSAStartup` để khởi tạo `wsaData`.
 
 ---
 
@@ -47,8 +47,8 @@ bind(listenSocket, reinterpret_cast<sockaddr*>(&address), sizeof(address));
 ```
 
 - `htons()` — chuyển port từ host byte order sang network byte order (big-endian).
-- `InetPton()` — chuyển chuỗi IP thành dạng nhị phân 32-bit.
-- IP `192.168.111.1` là địa chỉ của `VMware Network Adapter VMnet8` (host side), tức là server lắng nghe trên adapter ảo VMware NAT — chỉ nhận kết nối từ VM guest qua NAT.
+- `InetPton()` — chuyển chuỗi IP sang network byte order.
+- IP `192.168.111.1` là địa chỉ của `VMware Network Adapter VMnet8` (host side), tức là server lắng nghe trên adapter ảo VMware NAT — nhận kết nối từ VM guest qua NAT.
 
 ---
 
@@ -212,7 +212,7 @@ bool RecvFrame(SOCKET socketHandle, Frame& outFrame)
 }
 ```
 
-`RecvExact()` gọi `recv()` trong loop đến khi đủ `size` byte — cần thiết vì TCP có thể chia nhỏ dữ liệu.
+`RecvExact()` gọi `recv()` trong loop đến khi đủ `size` byte.
 
 ---
 
@@ -378,7 +378,7 @@ Win API sử dụng:
 - `Process32First()` / `Process32Next()` — duyệt từng `PROCESSENTRY32` trong snapshot
 - Mỗi entry có `th32ProcessID` (PID) và `szExeFile` (tên file EXE)
 
-**Server hiển thị:** danh sách được populate vào `m_processList` (ListBox) qua `ReplaceProcessList()`.
+**Server hiển thị:** danh sách tiến trình được hiện trong ô list process.
 
 ---
 
